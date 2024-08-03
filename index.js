@@ -1,12 +1,18 @@
 const express = require('express')
 const db = require('./config/database')
+const userRouter = require('./routers/router')
 
 const app = express()
 
-app.listen(1303, (err) => {
+app.use(express.urlencoded({ extended: true }))
+
+app.use('/api', userRouter)
+
+const port = 1303
+
+app.listen(port, (err) => {
     db()
-    if (err) {
-        console.log(err)
+    if (!err) {
+        console.log("Server started at http://localhost:" + port)
     }
-    console.log("server started at http://localhost:1303")
 })
